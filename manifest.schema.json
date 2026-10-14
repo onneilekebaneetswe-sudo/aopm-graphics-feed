@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/aopm/graphics-manifest.schema.json",
+  "title": "AOPM Graphics Feed Manifest",
+  "description": "Schema template only. A client must also verify the detached or embedded digital signature over the exact manifest bytes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "channel", "release", "app", "update_type", "assets", "signature"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "channel": { "type": "string", "enum": ["stable", "preview", "example-only"] },
+    "release": { "type": "integer", "minimum": 0 },
+    "app": { "const": "AOPM Professional Edition" },
+    "update_type": { "const": "graphics-only" },
+    "published_at": { "type": ["string", "null"], "format": "date-time" },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "url", "sha256", "size_bytes", "media_type"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-zA-Z0-9._-]+$" },
+          "path": { "type": "string", "pattern": "^[a-zA-Z0-9._/-]+$" },
+          "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+          "size_bytes": { "type": "integer", "minimum": 1, "maximum": 10485760 },
+          "media_type": { "type": "string", "enum": ["image/png", "image/jpeg", "image/webp", "image/svg+xml"] }
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "value"],
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "value": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

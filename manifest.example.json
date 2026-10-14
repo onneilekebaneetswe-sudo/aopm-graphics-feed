@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "channel": "example-only",
+  "release": 0,
+  "app": "AOPM Professional Edition",
+  "update_type": "graphics-only",
+  "published_at": null,
+  "assets": [],
+  "signature": {
+    "algorithm": "Ed25519",
+    "value": null
+  },
+  "note": "EXAMPLE ONLY — not signed, not a production release, and must be rejected by the updater."
+}
